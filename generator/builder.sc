@@ -1,7 +1,8 @@
-/** Code generator
-  *
-  * These classes turn component definitions into Scala code.
-  */
+/**
+ * Code generator
+ *
+ * These classes turn component definitions into Scala code.
+ */
 
 import $file.definition
 
@@ -10,20 +11,20 @@ import definition._
 case class GitHubRepository(owner: String, repository: String)
 
 class SBTProjectBuilder(
-    col: WebComponentCollection,
-    organization: String,
-    version: String,
-    publishTo: GitHubRepository
+  col: WebComponentCollection,
+  organization: String,
+  version: String,
+  publishTo: GitHubRepository
 ) {
-    def name = s"laminar-web-components-${col.packageName}"
+  def name = s"laminar-web-components-${col.packageName}"
 
-    def buildNpmDep(p: NpmPackage) = s"""npmDependencies in Compile += "${p.name}" -> "${p.version}""""
+  def buildNpmDep(p: NpmPackage) = s"""npmDependencies in Compile += "${p.name}" -> "${p.version}""""
 
-    def getNpmDeps(comp: WebComponent): Seq[NpmPackage] = Seq(comp.npmPackage) ++ comp.subComponents.flatMap(getNpmDeps)
+  def getNpmDeps(comp: WebComponent): Seq[NpmPackage] = Seq(comp.npmPackage) ++ comp.subComponents.flatMap(getNpmDeps)
 
-    def buildNPMDeps = col.components.flatMap(getNpmDeps).distinct.map(buildNpmDep).mkString("\n\n")
+  def buildNPMDeps = col.components.flatMap(getNpmDeps).distinct.map(buildNpmDep).mkString("\n\n")
 
-    def build = s"""
+  def build = s"""
 enablePlugins(ScalaJSPlugin)
 
 enablePlugins(ScalaJSBundlerPlugin)
@@ -81,27 +82,27 @@ class CollectionBuilder(col: WebComponentCollection, organization: String) {
   val docLink = s"""@see <a href="${col.link}">Component Collection Documentation</a>"""
 
   def build = s"""
-        /** ${col.packageName}
-          *
-          * $docLink
-          */
-        package ${organization}.laminar.webcomponents.${col.packageName} {
+/** ${col.packageName}
+  *
+  * $docLink
+  */
+package $organization.laminar.webcomponents.${col.packageName} {
 
-            import com.raquo.domtypes.generic.codecs._
-            import com.raquo.laminar.api.L._
-            import com.raquo.laminar.builders.HtmlTag
-            import com.raquo.laminar.keys.{ReactiveHtmlAttr, ReactiveProp, ReactiveStyle}
-            import com.raquo.laminar.nodes.ReactiveHtmlElement
+    import com.raquo.domtypes.generic.codecs._
+    import com.raquo.laminar.api.L._
+    import com.raquo.laminar.builders.HtmlTag
+    import com.raquo.laminar.keys.{ReactiveHtmlAttr, ReactiveProp, ReactiveStyle}
+    import com.raquo.laminar.nodes.ReactiveHtmlElement
 
-            import org.scalajs.dom
+    import org.scalajs.dom
 
-            import scala.scalajs.js
-            import scala.scalajs.js.annotation.JSImport
+    import scala.scalajs.js
+    import scala.scalajs.js.annotation.JSImport
 
-            ${buildStylesObject(col.globalCssProperties, docLink)}
+    ${buildStylesObject(col.globalCssProperties, docLink)}
 
-            ${col.components.map(c => new Builder(c).build).mkString("\n")}
-        }
+    ${col.components.map(c => new Builder(c).build).mkString("\n")}
+}
     """
 }
 
@@ -206,12 +207,17 @@ class Builder(comp: WebComponent) {
       case None                           => ""
     }
 
+  private def camelCase(s: String) = {
+    val ss = s.split("-")
+    ss.head + ss.tail.map(_.capitalize).mkString
+  }
+
   def buildNamedSlot(s: NamedSlot) = s"""
     /** ${s.description}
       *
       * $docLink
       */
-    def ${s.name}(els: HtmlElement*): Seq[HtmlElement] = els.map(_.amend(slot := "${s.name}"))
+    def ${camelCase(s.name)}(els: HtmlElement*): Seq[HtmlElement] = els.map(_.amend(slot := "${s.name}"))
   """
 
   def buildSlots = s"""

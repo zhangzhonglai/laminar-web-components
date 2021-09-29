@@ -4,3 +4,4 @@ metals.sbt
 .vscode
 .bloop
 target
+.bsp

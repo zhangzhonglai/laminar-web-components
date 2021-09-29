@@ -3,6 +3,7 @@
 [Laminar](https://github.com/raquo/Laminar) type definitions for web component collections. Currently included collections:
 
 - [Google's Material Web Components](https://github.com/material-components/material-components-web-components)
+- [Vaadin Web Components](https://vaadin.com/docs/v21/ds/components)
 
 ## Usage
 
@@ -12,9 +13,10 @@ Package is published to GitHub Packages in this repository. To reference it, you
 [sbt-github-packages](https://github.com/djspiewak/sbt-github-packages) SBT plugin:
 
 ```
-resolvers += Resolver.githubPackages("uosis")
+resolvers += Resolver.githubPackages("zhangzhonglai")
 
-libraryDependencies += "com.github.uosis" %%% "laminar-web-components-material" % "0.1.0"
+libraryDependencies += "com.github.zhangzhonglai" %%% "laminar-web-components-material" % "0.1.0"
+libraryDependencies += "com.github.zhangzhonglai" %%% "laminar-web-components-vaadin" % "0.1.0"
 ```
 
 ### Ensure you have [sbt-scalajs-bundler](https://scalacenter.github.io/scalajs-bundler/) plugin
@@ -38,7 +40,7 @@ To run:
 
 ## Generator
 
-[generator](https://github.com/uosis/laminar-web-components/tree/master/generator) folder contains Ammonite scripts used to generate component type definitions. If you want to tweak the generated types, changes should be made here.
+[generator](https://github.com/zhangzhonglai/laminar-web-components/tree/master/generator) folder contains Ammonite scripts used to generate component type definitions. If you want to tweak the generated types, changes should be made here.
 
 To run code generation:
 

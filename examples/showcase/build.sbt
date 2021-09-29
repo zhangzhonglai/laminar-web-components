@@ -20,6 +20,7 @@ libraryDependencies += "com.raquo" %%% "laminar" % "0.13.1"
 resolvers += Resolver.githubPackages("zhangzhonglai")
 
 libraryDependencies += "com.github.zhangzhonglai" %%% "laminar-web-components-material" % "0.1.0"
+libraryDependencies += "com.github.zhangzhonglai" %%% "laminar-web-components-vaadin" % "0.1.0"
 
 scalaJSUseMainModuleInitializer := true
 

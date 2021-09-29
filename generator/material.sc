@@ -1208,7 +1208,7 @@ val componentCollection = WebComponentCollection(
     WebComponent(
       tag = "mwc-list",
       description = "Lists are continuous, vertical indexes of text or images.",
-      link = "https://github.com/material-components/material-components-web-components/tree/master/packages/tab-bar",
+      link = "https://github.com/material-components/material-components-web-components/tree/master/packages/list",
       npmPackage = NpmPackage(name = "@material/mwc-list", version = "0.18.0"),
       jsImport = "@material/mwc-list",
       slots = Slots(

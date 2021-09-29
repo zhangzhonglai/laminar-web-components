@@ -1,14 +1,19 @@
 import $file.material
+import $file.vaadin
 import $file.builder
 
-val organization = "com.github.uosis"
+val organization = "com.github.zhangzhonglai"
 val version = "0.1.0"
-val publishTo = builder.GitHubRepository("uosis", "laminar-web-components")
+val publishTo = builder.GitHubRepository("zhangzhonglai", "laminar-web-components")
 
-val outputProjectPath = os.pwd / "material"
+// material
+val materialOutput = os.pwd / "material"
 
-val buildSbt = new builder.SBTProjectBuilder(material.componentCollection, organization, version, publishTo).build
-val code = new builder.CollectionBuilder(material.componentCollection, organization).build
+os.write.over(materialOutput / os.RelPath("src/main/scala/material.scala"), new builder.CollectionBuilder(material.componentCollection, organization).build)
+os.write.over(materialOutput / "build.sbt", new builder.SBTProjectBuilder(material.componentCollection, organization, version, publishTo).build)
 
-os.write.over(outputProjectPath / os.RelPath("src/main/scala/material.scala"), code)
-os.write.over(outputProjectPath / "build.sbt", buildSbt)
+// vaadin
+val vaadinOutput = os.pwd / "vaadin"
+
+os.write.over(vaadinOutput / os.RelPath("src/main/scala/vaadin.scala"), new builder.CollectionBuilder(vaadin.componentCollection, organization).build)
+os.write.over(vaadinOutput / "build.sbt", new builder.SBTProjectBuilder(vaadin.componentCollection, organization, version, publishTo).build)
