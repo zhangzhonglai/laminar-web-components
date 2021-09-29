@@ -40,15 +40,15 @@ githubOwner := "${publishTo.owner}"
 
 githubRepository := "${publishTo.repository}"
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.6"
 
-crossScalaVersions := Seq("2.12.10", "2.13.3")
+crossScalaVersions := Seq("2.12.14", "2.13.6", "3.0.2")
 
-libraryDependencies += "com.raquo" %%% "laminar" % "0.10.2"
+libraryDependencies += "com.raquo" %%% "laminar" % "0.13.1"
 
 scalaJSUseMainModuleInitializer := true
 
-scalaJSLinkerConfig in (Compile, fastOptJS) ~= { _.withSourceMap(false) }
+scalaJSLinkerConfig ~= { _.withSourceMap(false) }
 
 useYarn := true
 
